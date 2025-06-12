@@ -1,1 +1,1 @@
-# Computational-Neuroscience-Methods
+# Neuroscience
