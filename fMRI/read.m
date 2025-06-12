@@ -1,0 +1,3 @@
+data = niftiread("sub-01_T1w.nii.gz");
+
+volshow(data)
