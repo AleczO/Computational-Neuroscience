@@ -1,1 +1,0 @@
-Pojęcie __tripartite synapse__ jest opisem tego jak funkcjonuje przejście pomiędzy _neuronem presynaptycznym_, _neuronem postsynaptycznym_
