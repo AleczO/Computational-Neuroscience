@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 dt = 0.01
-T = np.arange(0, 10 / dt, dt)
+T = np.arange(0, 1 / dt, dt)
 N = T.size
 
 V = np.zeros(N)
