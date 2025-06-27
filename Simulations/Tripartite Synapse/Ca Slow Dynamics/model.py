@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dt = 0.01
+dt = 0.001
 
 class V_pre_CLASS:
     def __init__(self, n, m, h, v0):
@@ -40,13 +40,15 @@ class C_i_CLASS:
 
         # Ca Fast dynamics variables
 
-        self.c_fast = 0
+        self.c_fast = 0.0
+        self.c_fast_u = 0
         self.m_Ca = 0.8
         
         # Ca Slow dynamics variables
                 
         self.c_slow = 0
-        self.c_ER = 3
+        self.c_slow_u = 0
+        self.c_ER = 0.1
         self.p = 0
 
         self.q = 30
@@ -54,17 +56,19 @@ class C_i_CLASS:
     # -------------------------------------------- Ca Intracellular update function --------------------------------------------
 
     def U(self, v):
-        self.c_i = self.c_fast + self.c_slow
-        
+
+        self.c_slow_U()
         self.c_fast_U(v)
 
-        self.c_ER_U()
-        self.c_slow_U()
-        
 
+        self.m_Ca_U(v)
+        self.c_ER_U()
         self.c_slow_params_U()
 
-
+        self.c_i = (self.c_fast_u - self.c_fast) + (self.c_slow_u - self.c_slow) + self.c_i
+        
+        self.c_fast = self.c_fast_u
+        self.c_slow = self.c_slow_u
 
 
     # -------------------------------------------- Ca fast update functions --------------------------------------------
@@ -76,9 +80,8 @@ class C_i_CLASS:
         F = 96487.0
         V_btn = 0.13
 
-        self.c_fast = (- (self.I_Ca(v) * A_btn) / (z_Ca * F * V_btn) + self.J_PMleak() - (self.I_PMCa() * A_btn) / (z_Ca * F * V_btn)) * dt + self.c_fast
-
-        self.m_Ca_U()
+        #self.c_fast_u = (- (self.I_Ca(v) * A_btn) / (z_Ca * F * V_btn) + self.J_PMleak() - (self.I_PMCa() * A_btn) / (z_Ca * F * V_btn)) * dt + self.c_fast
+        self.c_fast_u = (-(self.I_Ca(v) * A_btn) / (z_Ca * F * V_btn) + self.J_PMleak() ) * dt + self.c_fast
 
     def J_PMleak(self):
         v_leak = 2.66e-6
@@ -99,12 +102,11 @@ class C_i_CLASS:
 
         return v_PMCa * self.c_i**2 / (self.c_i**2 + K_PMCa**2)
     
-    def m_Ca_U(self):
+    def m_Ca_U(self, v):
         V_mCa = -17.0
         k_mCa = 8.4
-        V_m = -70.0
-        m_Ca_inf = 1 / (1 + np.exp((V_mCa - V_m) / k_mCa))
-        tau_mCa = 10
+        m_Ca_inf = 1.0 / (1.0 + np.exp((V_mCa - v) / k_mCa))
+        tau_mCa = 1
 
         self.m_Ca = ((m_Ca_inf - self.m_Ca) / tau_mCa) * dt + self.m_Ca
 
@@ -113,9 +115,10 @@ class C_i_CLASS:
 
 
     def c_slow_U(self):
-        self.c_slow = (-self.J_chan() - self.J_ERpump() - self.J_ERleak()) * dt + self.c_slow
+        self.c_slow_u = (self.J_chan() - self.J_ERpump() - self.J_ERleak()) * dt + self.c_slow
 
     def J_chan(self):
+
         def m_inf():
             d_1 = 0.13
             m_inf = self.p / (self.p + d_1)
@@ -149,6 +152,8 @@ class C_i_CLASS:
     def c_slow_params_U(self):
         self.p_U()
         self.q_U()
+
+
 
     def c_ER_U(self):
         c_1 = 0.185
@@ -185,27 +190,43 @@ class C_i_CLASS:
 
 V_pre = V_pre_CLASS(0, 0, 1, -70)
 c_i = C_i_CLASS(0.1)
-N = int(10 / dt)
+N = int(1 / dt)
 
 
 
 
 V = []
 T = []
+C_fast = []
+C_slow = []
 C_i = []
+MCa = []
+
+
 
 I = 8.2
 
 for t in range(N):
+    if t > N / 2:
+        I = 0
+
+    V_pre.U(I)
+    c_i.U(V_pre.v)
+
 
     V.append(V_pre.v)
     T.append(t)
-    C_i.append(c_i.c_ER)
+    C_slow.append(c_i.c_slow)
+    C_fast.append(c_i.c_fast)
+    C_i.append(c_i.c_i)
 
-    c_i.U(V_pre.v)
-    V_pre.U(I)
+    MCa.append(c_i.m_Ca)
 
-    
-    
+
+
+#plt.plot(T, V)
 plt.plot(T, C_i)
+#plt.plot(T, )
+#plt.plot(T, C_fast)
+
 plt.show()
