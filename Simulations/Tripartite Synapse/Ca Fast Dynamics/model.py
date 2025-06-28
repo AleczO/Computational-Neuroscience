@@ -36,7 +36,7 @@ class C_i_CLASS:
         self.c_i = c0_i
         self.c_fast = 0
         self.c_slow = 0
-        self.m_Ca = 0.9
+        self.m_Ca = 0.6
 
     def c_fast_U(self, v):
         A_btn = 1.24
@@ -81,7 +81,7 @@ class C_i_CLASS:
 
 V_pre = V_pre_CLASS(0, 0, 1, 0)
 c_fast= C_i_CLASS(0)
-N = int(100 / dt)
+N = int(10 / dt)
 
 
 
@@ -93,8 +93,6 @@ C_fast = []
 I = 6.2
 
 for t in range(N):
-    if(t > N / 10):
-        I = 0
     V.append(V_pre.v)
     T.append(t)
     C_fast.append(c_fast.c_fast)
@@ -103,6 +101,6 @@ for t in range(N):
     V_pre.U(I)
     
 
-    
+#plt.plot(T, V)
 plt.plot(T, C_fast)
 plt.show()
