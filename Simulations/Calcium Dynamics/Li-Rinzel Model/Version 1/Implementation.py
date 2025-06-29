@@ -79,8 +79,8 @@ T = np.zeros(N, float)
 Ca[0] = 0.18
 H[0] = 0.6
 
-def IP3(t):
-    if 20 < t  < 100:
+def IP_3(t):
+    if 50 < t < 100:
         return 0.5
     else:
         return 0.0
@@ -88,8 +88,8 @@ def IP3(t):
 
 for t in range(1, N):
     
-    Ca[t] = Ca[t - 1] + DCa(Ca[t - 1], IP3(t * dt), H[t - 1])
-    H[t] = H[t - 1] + Dh(Ca[t - 1], IP3(t * dt), H[t - 1])
+    Ca[t] = Ca[t - 1] + DCa(Ca[t - 1], IP_3(t * dt), H[t - 1])
+    H[t] = H[t - 1] + Dh(Ca[t - 1], IP_3(t * dt), H[t - 1])
     T[t] = T[t - 1] + dt
 
 

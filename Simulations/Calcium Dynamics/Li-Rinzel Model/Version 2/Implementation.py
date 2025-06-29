@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 
 dt = 0.01
@@ -12,7 +11,7 @@ class Ca_Dynamics:
         self.IP_3 = 0
         self.Ca_ER = 0
         
-        self.N_hOpen = 0
+        self.h = h_0
     
 
     def Ca_U(self):
@@ -36,7 +35,7 @@ class Ca_Dynamics:
         c_1 = 0.185
         v_1 = 6.0
         
-        return (c_1 * v_1 * (m_inf**3) * (n_inf**3) * (self.N_hOpen / 3) * (self.Ca - self.Ca_ER))
+        return (c_1 * v_1 * (m_inf**3) * (n_inf**3) * (self.h**3) * (self.Ca - self.Ca_ER))
         
     
     def J_Pump(self):
@@ -59,46 +58,39 @@ class Ca_Dynamics:
         d_1 = 0.13
         d_3 = 0.9434
 
-        Ah = a_2 * d_2 * ((self.IP_3 + d_1) / (self.IP_3 + d_3))
+        alpha_h = a_2 * d_2 * ((self.IP_3 + d_1) / (self.IP_3 + d_3))
 
-        Bh = a_2 * self.Ca
+        beta_h = a_2 * self.Ca
         
-        
-        P = np.array([[1 - 3 * Ah * dt ,            3 * Bh * dt ,                       0 ,                    0],
-                      [       Bh *  dt , 1 - (Bh + 2 * Ah) * dt ,             2 * Ah * dt ,                    0],
-                      [              0 ,            2 * Bh * dt ,  1 - (Ah + 2 * Bh) * dt ,              Ah * dt],
-                      [              0 ,                      0 ,             3 * Bh * dt ,      1 - 3 * Bh * dt]])
-        
-        
-
-        self.N_hOpen = random.choices([0,1,2,3], P[self.N_hOpen], k=1)[0]
-        print(self.N_hOpen)
-        
+        self.h = (alpha_h * (1 - self.h) - beta_h * self.h) * dt + self.h
 
 
-Ca = Ca_Dynamics(0.18, 0.6)
+Ca = Ca_Dynamics(0.05, 0.6)
 
 N = int(200 / dt)
 
 T = []
 CaT = []
-NOpenT = []
-
-Ca.IP_3 = 0.9
+hT = []
 
 for t in range(N):
+    
+    if 50 < t * dt < 100:
+        Ca.IP_3 = 0.45
+    else:
+        Ca.IP_3 = 0.0 
     
     Ca.Ca_U()
     Ca.Ca_ER_U()
     Ca.h_U()
     
     T.append(t)
-    NOpenT.append(Ca.N_hOpen)
+    hT.append(Ca.h)
     CaT.append(Ca.Ca)
     
 
     
 plt.plot(T, CaT)
-#plt.plot(T, NOpenT)
+plt.plot(T, hT)
 plt.grid()
 plt.show()
