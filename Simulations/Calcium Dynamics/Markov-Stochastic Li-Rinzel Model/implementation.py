@@ -7,12 +7,12 @@ dt = 0.01
 
 class Ca_Dynamics:
     
-    def __init__(self, Ca_0, h_0):
+    def __init__(self, Ca_0):
         self.Ca = Ca_0
         self.IP_3 = 0
         self.Ca_ER = 0
         
-        self.N_hOpen = 0
+        self.Nh = np.zeros(30)
     
 
     def Ca_U(self):
@@ -36,7 +36,15 @@ class Ca_Dynamics:
         c_1 = 0.185
         v_1 = 6.0
         
-        return (c_1 * v_1 * (m_inf**3) * (n_inf**3) * (self.N_hOpen / 3) * (self.Ca - self.Ca_ER))
+        return (c_1 * v_1 * (m_inf**3) * (n_inf**3) * (self.Open_Channels() / self.Nh.size) * (self.Ca - self.Ca_ER))
+    
+    def Open_Channels(self):
+        cnt = 0
+        for h in self.Nh:
+            if h == 3:
+                cnt += 1
+                
+        return cnt
         
     
     def J_Pump(self):
@@ -70,13 +78,13 @@ class Ca_Dynamics:
                       [              0 ,                      0 ,             3 * Bh * dt ,      1 - 3 * Bh * dt]])
         
         
-
-        self.N_hOpen = random.choices([0,1,2,3], P[self.N_hOpen], k=1)[0]
-        print(self.N_hOpen)
+        for h in range(self.Nh.size):
+            self.Nh[h] = random.choices([0,1,2,3], P[int(self.Nh[h])], k=1)[0]
         
 
+# random.seed(1e9 + 7)
 
-Ca = Ca_Dynamics(0.18, 0.6)
+Ca = Ca_Dynamics(0.18)
 
 N = int(200 / dt)
 
@@ -84,7 +92,7 @@ T = []
 CaT = []
 NOpenT = []
 
-Ca.IP_3 = 0.9
+Ca.IP_3 = 0.3
 
 for t in range(N):
     
@@ -93,12 +101,10 @@ for t in range(N):
     Ca.h_U()
     
     T.append(t)
-    NOpenT.append(Ca.N_hOpen)
     CaT.append(Ca.Ca)
     
 
     
 plt.plot(T, CaT)
-#plt.plot(T, NOpenT)
 plt.grid()
 plt.show()
