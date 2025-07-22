@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import mne
 
-raw_file = mne.io.read_raw_bdf("EEG Data Analysis\EEG Simple Epochs Construction\sub-01.bdf")
+raw_file = mne.io.read_raw_bdf("EEG Data Analysis\\EEGs Data\\3\\S01.bdf")
 
 print(raw_file.info)
 print(raw_file.ch_names)

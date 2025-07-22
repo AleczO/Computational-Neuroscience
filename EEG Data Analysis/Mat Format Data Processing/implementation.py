@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import mne
 
-raw_file = read_mat("EEG Data Analysis\EEG Import From Mat Format\S0.mat")
+raw_file = read_mat("EEG Data Analysis\\EEGs Data\\2\\S0.mat")
 
 
 print(raw_file['SIGNAL'].shape)
