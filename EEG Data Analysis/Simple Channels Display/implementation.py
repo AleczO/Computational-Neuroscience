@@ -2,7 +2,7 @@ import numpy as np
 import mne
 
 
-file = mne.io.read_raw_edf("EEG Data Analysis/Simple Channels Display/P1.edf") 
+file = mne.io.read_raw_edf("EEG Data Analysis/EEGs Data/4/S1.edf") 
 
 print(file.info)
 
