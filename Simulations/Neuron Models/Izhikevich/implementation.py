@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dt = 0.1
-T = np.arange(0, 100 * (1 / dt), dt)
+dt = 0.01
+T = np.arange(0, 10 * (1 / dt), dt)
 N = T.size
 
 U = np.zeros(N)
