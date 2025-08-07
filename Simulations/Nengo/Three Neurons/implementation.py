@@ -14,9 +14,11 @@ with model:
     neurons = nengo.Ensemble(
         n_neurons=3,
         dimensions=1,
-        intercepts=Uniform(0,1),
         max_rates=Uniform(100,100),
-        noise=BrownNoise()
+        neuron_type=nengo.LIF(),
+        noise=BrownNoise(),
+        encoders=[[1],[1],[-10]]
+
     )
 
 
@@ -35,11 +37,17 @@ with model:
 with nengo.Simulator(model) as sim:
     sim.run(2)
 
-t = sim.trange()
+
+
+times = sim.trange()
+
+plt.figure()
+plt.plot(times, sim.data[filtered])
+plt.plot(times, sim.data[input_probe])
+plt.show()
 
 
 plt.figure()
-plt.plot(t, sim.data[filtered])
-plt.plot(t, sim.data[input_probe])
-
+rasterplot(sim.trange(), sim.data[spikes])
+plt.xlim(0, 1)
 plt.show()
