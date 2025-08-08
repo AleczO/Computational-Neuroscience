@@ -28,7 +28,7 @@ for t in range(N - 1):
     V[t + 1] = (dt / C) * (-(V[t] - E) + D * math.exp((V[t] - V_T) / D) + I[t] / gL) + V[t]
     if V[t] > V_Thr:
         V[t + 1] = V_re
-        #V[t] = V_Thr
+        V[t] = V_Thr
 
 plt.plot(T, V)
 plt.show()
