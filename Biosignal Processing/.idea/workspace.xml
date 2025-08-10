@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f23a1351-1ac3-4886-b52d-abb0682dea7a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Simulations/Probabilistic Learning Models/RL Model/description.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Simulations/Probabilistic Learning Models/RL Model/implementation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Biosignal Processing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Biosignal Processing.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EEG/Channels Display/implementation.py" beforeDir="false" afterPath="$PROJECT_DIR$/EEG/Channels Display/implementation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EEG/EEGs Data/description.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EEG/EEGs Data/description.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EEG/Epochs Construction/implementation.py" beforeDir="false" afterPath="$PROJECT_DIR$/EEG/Epochs Construction/implementation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Channels Display/implementation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Epochs Construction/implementation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Epochs Construction/resources.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Mat Format Data Processing/implementation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Resources.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EEG/Resources.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EEG Data Analysis/Working File/implementation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Simulations/Neuron Models/Exponential Integrate-and-Fire/implementation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Simulations/Neuron Models/Exponential Integrate-and-Fire/implementation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +58,7 @@
       <workItem from="1754589704163" duration="136000" />
       <workItem from="1754589865210" duration="1331000" />
       <workItem from="1754598853964" duration="831000" />
+      <workItem from="1754649167177" duration="1008000" />
     </task>
     <servers />
   </component>
