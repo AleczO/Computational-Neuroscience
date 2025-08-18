@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
+
+
+
 dt = 0.1
 T = np.arange(0, 400, dt)
 N = T.size
