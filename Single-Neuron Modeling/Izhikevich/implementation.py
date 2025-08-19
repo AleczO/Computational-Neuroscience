@@ -1,17 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def Izhikevich(dt: float, T: float):
+def Izhikevich(dt: float, T: float, a, b, c, d):
     N = int(T / dt)
 
     t_vec = np.arange(0, T, dt)
     u_vec = np.zeros(N)
     v_vec = np.zeros(N)
-
-    a = 0.02
-    b = 0.2
-    c = -65.0
-    d = 2.0
 
     v_vec[0] = c
     u_vec[0] = c * b
@@ -28,7 +23,7 @@ def Izhikevich(dt: float, T: float):
 
     return v_vec, t_vec
 
-V, T = Izhikevich(0.01, 100)
+V, T = Izhikevich(0.01, 200, 0.02, 0.2, -65.0, 2.0)
 
 plt.plot(T, V)
 plt.show()

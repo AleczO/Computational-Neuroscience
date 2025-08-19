@@ -1,28 +1,32 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import math
+
+def LI(dt: float, T: float):
+    t_vec = np.arange(0, T, dt)
+    N = int(T / dt)
+
+    E = -72
+    gL = 4
+    C_m = 10
+
+    v_vec = np.array([])
+    v = -70
+
+    I = 10.0
+
+    for t in range(N):
+        if t > 200 * (1 / dt):
+            I = 0
+
+        
+        v = (-gL * (v - E) + I) * (dt / C_m) + v
+        v_vec = np.append(v_vec, v)
+        
+
+    return t_vec, v_vec
 
 
-
-
-dt = 0.1
-T = np.arange(0, 400, dt)
-N = T.size
-
-E = -72
-gL = 4
-Cm = 30
-
-V = np.zeros(N)
-V[0] = -70
-
-I = 10.0
-
-for t in range(N - 1):
-    if t > 200 * (1 / dt):
-        I = 0
-
-    V[t + 1] = (dt / Cm) * (-gL * (V[t] - E) + I) + V[t]
+T, V = LI(0.01, 100)
 
 plt.plot(T, V)
 plt.show()

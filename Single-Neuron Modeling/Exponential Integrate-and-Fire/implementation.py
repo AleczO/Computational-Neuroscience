@@ -1,32 +1,38 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def EIF(dt):
-    T = np.arange(0, 100 / dt, dt)
-    N = T.size
+def EIF(dt: float, T: float):
+    N = int(T / dt)
 
-    V_T = -55
-    V_Thr = -55
-    V_re = -75
-    E = -72
+    t_vec = np.array([])
+    u_vec = np.array([])
 
-    D = 5
-    C = 15
-    gL = 4
+    
+    v_rh = -50
+    u_rest = -72
+    u_r = -75
 
-    V = np.zeros(N)
-    V[0] = -70
+    Delta_t = 5
+    tau = 15
 
-    I = 50.0 * np.ones(N)
+    theta_reset = -55 
+
+    u = u_rest
+
+    RI = 15.0
 
     for t in range(N - 1):
+        u = ( -(u - u_rest) + Delta_t * np.exp((u - v_rh) / Delta_t) + RI ) * (dt / tau) + u
+        if u > theta_reset:
+            u = u_r
+            
+        u_vec = np.append(u_vec, u)
+        t_vec = np.append(t_vec, t)
 
-        V[t + 1] = (dt / C) * (-(V[t] - E) + D * np.exp((V[t] - V_T) / D) + I[t] / gL) + V[t]
-        if V[t] > V_Thr:
-            V[t + 1] = V_re
-            V[t] = V_Thr
+    return t_vec, u_vec
 
-    plt.plot(T, V)
-    plt.show()
 
-EIF(0.1)
+T, V = EIF(0.1, 300)
+
+plt.plot(T, V)
+plt.show()
