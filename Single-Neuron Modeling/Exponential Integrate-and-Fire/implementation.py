@@ -4,8 +4,8 @@ import numpy as np
 def EIF(dt: float, T: float):
     N = int(T / dt)
 
-    t_vec = np.array([])
-    u_vec = np.array([])
+    t_vals = np.arange(0, T, dt)
+    u_vals = np.zeros(N)
 
     
     v_rh = -50
@@ -19,17 +19,16 @@ def EIF(dt: float, T: float):
 
     u = u_rest
 
-    RI = 15.0
+    RI = 20.0
 
-    for t in range(N - 1):
+    for i in range(N):
         u = ( -(u - u_rest) + Delta_t * np.exp((u - v_rh) / Delta_t) + RI ) * (dt / tau) + u
         if u > theta_reset:
             u = u_r
             
-        u_vec = np.append(u_vec, u)
-        t_vec = np.append(t_vec, t)
+        u_vals[i] = u
 
-    return t_vec, u_vec
+    return t_vals, u_vals
 
 
 T, V = EIF(0.1, 300)

@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def LIF(dt: float, T: float):
+    N = int(T / dt)
+
+    
     tau = 10 
     u_rest = -65 
     u_r = -70
@@ -11,19 +14,17 @@ def LIF(dt: float, T: float):
     u = u_rest
     RI = 30
 
-    u_vec = np.array([])
-    t_vec = np.array([])
+    t_vals = np.arange(0, T, dt)
+    u_vals = np.zeros(N)
 
-    for i in range(int(T / dt)):
+    for i in range(N):
         u = (-(u - u_rest) + RI) * (dt / tau) + u
         if u >= theta_reset:
             u = u_r
 
-        u_vec = np.append(u_vec, u)
-        t_vec = np.append(t_vec, i)
+        u_vals[i] = u
 
-
-    return u_vec, t_vec
+    return u_vals, t_vals
 
 
 v, t = LIF(0.1, 100)

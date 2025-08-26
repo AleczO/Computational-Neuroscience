@@ -4,24 +4,26 @@ import matplotlib.pyplot as plt
 def Izhikevich(dt: float, T: float, a, b, c, d):
     N = int(T / dt)
 
-    t_vec = np.arange(0, T, dt)
-    u_vec = np.zeros(N)
-    v_vec = np.zeros(N)
-
-    v_vec[0] = c
-    u_vec[0] = c * b
+    v = c
+    u = c * b
 
     I = 5.0 * np.ones(N)
 
-    for t in range(N - 1):
-        if v_vec[t] >= 30:
-            v_vec[t] = c
-            u_vec[t] = u_vec[t] + d
+    v_vals = np.zeros(N)
+    t_vals = np.arange(0, T, dt)
 
-        v_vec[t + 1] = (0.04 * pow(v_vec[t], 2) + 5.0 * v_vec[t] + 140.0 - u_vec[t] + I[t]) * dt + v_vec[t]
-        u_vec[t + 1] = (a * (b * v_vec[t] - u_vec[t])) * dt + u_vec[t]
+    for t in range(N):
+        if v >= 30:
+            v = c
+            u = u + d
 
-    return v_vec, t_vec
+        v = (0.04 * np.pow(v, 2) + 5.0 * v + 140.0 - u + I[t]) * dt + v
+        u = (a * (b * v - u)) * dt + u
+        
+        v_vals[t] = v
+
+
+    return v_vals, t_vals
 
 V, T = Izhikevich(0.01, 200, 0.02, 0.2, -65.0, 2.0)
 

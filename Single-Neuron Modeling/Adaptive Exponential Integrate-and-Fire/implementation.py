@@ -1,46 +1,46 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def AdEx(dt: float, T: float):
-    
+def AdEx(dt: float, T: float, ):
     u_vec = np.array([])
     t_vec = np.array([])
 
     u_rest = -70
 
     v_rh = -50
-    u_r = -55
+    theta_reset = -55
+    u_r = -75
 
-    R = 50
+    R = 500
     Delta_t = 2
 
     u = u_rest
     w = 0
 
-    I = 0
+    I = 1
 
-    tau_m = 200
-    tau_w = 30
+    tau_m = 5.0
+    
+    
+    tau_w = 10.0
 
-    a = 0
-    b = 60
-
-    Sigma = 1
+    a = -0.5
+    b = 7
     
     for i in range(int(T / dt)):
-        u = (-(u - u_rest) + Delta_t * np.exp((u - v_rh) / Delta_t) - R * w  +  R * I) * (dt / tau_m) + u
-        w = (a * (u - u_rest) - w + b * tau_w * Sigma) * (dt / tau_m) + w
+        u = (-(u - u_rest) + Delta_t * np.exp((u - v_rh) / Delta_t) - w  +  R * I) * (dt / tau_m) + u
+        w = (a * (u - u_rest) - w) * (dt / tau_w) + w
 
-        if u >= v_rh:
+        if u >= theta_reset:
             u = u_r
-            Sigma += 1
+            w = w + b 
         
         u_vec = np.append(u_vec, u)
         t_vec = np.append(t_vec, i)
 
     return t_vec, u_vec
 
-T, V = AdEx(0.01, 10)
+T, V = AdEx(0.1, 100)
 
 plt.plot(T, V)
 plt.show()
