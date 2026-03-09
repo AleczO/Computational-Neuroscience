@@ -1,12 +1,28 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import mne
 
 raw_file = mne.io.read_raw_bdf(r"EEG\EEGs Data\illusory-face-eeg\sub-01_task-faceobj_eeg.bdf")
 
-print(raw_file.info)
-print(raw_file.ch_names)
+raw_file.plot(block=True)
 
-raw_file.crop(tmin=64.0, tmax=68.0)
+#print(raw_file.info)
+#print(raw_file.ch_names)
+
+#raw_file.crop(tmin=64.0, tmax=68.0)
+
+#data, times = raw_file.get_data(return_times=True)
+
+#data = data * 1e6
+
+
+
+##plt.plot(times, data[0])
+#Aplt.show()
+
+"""
+
+
 
 def display_epochs():
     events = mne.find_events(raw_file, stim_channel="Status")
@@ -16,8 +32,12 @@ def display_epochs():
 
 
 def display_raw():
+    raw_file.compute_psd(fmax=50).plot(picks="data", exclude="bads", amplitude=False)
     raw_file.plot(block=True)
+    
 
 
-display_epochs()
+# display_epochs()
 
+display_raw()
+"""
